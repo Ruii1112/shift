@@ -31,4 +31,22 @@ class ShiftController extends Controller
         $user->fill($input)->save();
         return redirect('/user');
     }
+    
+    public function user_edit(User $user)
+    {
+        return view('shifts/member_edit')->with(['user'=>$user]);
+    }
+    
+    public function user_update(Request $request, User $user)
+    {
+        $input = $request['user'];
+        $user->fill($input)->save();
+        return redirect('/user');
+    }
+    
+    public function user_delete(User $user)
+    {
+        $user->delete();
+        return redirect('/user');
+    }
 }

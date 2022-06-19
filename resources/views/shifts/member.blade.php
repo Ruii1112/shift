@@ -14,6 +14,7 @@
                 <tr>
                     <th>　名前　</th>
                     <th>　かな　</th>
+                    <th>　生年月日　</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -21,11 +22,19 @@
                     <tr>
                         <th>　{{$user->first_name}} {{$user->last_name}}　</th>
                         <th>　{{$user->first_name_kana}} {{$user->last_name_kana}}　</th>
-                        <th><a href="/user/edit">　編集　</a></th>
-                        <th><a href="/user/delete">　削除　</a></th>
+                        <th> {{ $user->birth }}</th>
+                        <th><a href="/user/edit/{{$user->id}}">　編集　</a></th>
+                        <th>
+                            <form action="/user/{{ $user->id }}" id="form_{{ $user->id }}" method="post" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">削除</button> 
+                            </form>
+                        </th>
                     </tr>
                 @endforeach
             </table>
         </div>
+        <div class="back"><a href="/">戻る</a></div>
     </body>
 </html>
