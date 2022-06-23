@@ -9,9 +9,11 @@
     <body>
         <h1>シフト希望管理システム</h1>
         <div class="selection">
-            <p><a href="/make">・シフト希望作成</a></p>
-            <p><a href="/output">・シフト希望出力</a></p>
-            <p><a href="/user">・メンバー編集</a></p>
+            <ul>
+                <li><a href="/make">シフト希望作成</a></li>
+                <li><a href="/output">シフト希望出力</a></li>
+                <li><a href="/user">メンバー編集</a></li>
+            </ul>
         </div>
     </body>
 </html>

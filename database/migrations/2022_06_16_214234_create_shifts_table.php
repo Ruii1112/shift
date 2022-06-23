@@ -18,6 +18,11 @@ class CreateShiftsTable extends Migration
             $table->string('name',100);
             $table->date('start_date');
             $table->date('end_date');
+            $table->time('weekday_start_time');
+            $table->time('weekday_end_time');
+            $table->time('holiday_start_time');
+            $table->time('holiday_end_time');
+            $table->integer('starting')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

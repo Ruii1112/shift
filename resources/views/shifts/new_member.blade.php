@@ -25,8 +25,8 @@
             </div>
             <div class="sex">
                 <p>性別</p>
-                <label><input type="radio" name="user[sex]" value="1"/>男</label>
-                <label><input type="radio" name="user[sex]" value="0"/>女</label>
+                <label><input type="radio" name="user[sex]" value="男"/>男</label>
+                <label><input type="radio" name="user[sex]" value="女"/>女</label>
             </div>
             <div class="login_info">
                 <p>ログインID</p>

@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'last_name' => '瑠威',
             'last_name_kana' => 'るい',
             'birth' => '1998-11-12',
-            'sex' => 1,
+            'sex' => '男',
             'login_id' => '10004929',
             'password' => 'a10004929',
         ]);

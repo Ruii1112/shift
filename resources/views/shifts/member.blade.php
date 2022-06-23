@@ -8,13 +8,27 @@
     </head>
     <body>
         <h1>シフト希望管理システム</h1>
-        <p><a href="/user/new">新規登録</a></p>
+        <div class="search">
+            <h3>検索</h3>
+            <form action="/user/search" method="GET">
+                <table border="1">
+                    <tr>
+                        <th>　名前　</th>
+                        <th><input type="text" name="keyword1" value="{{ $keyword1 }}"/></th>
+                        <th><input type="text" name="keyword2" value="{{ $keyword2 }}"/></th>
+                    </tr>
+                </table>
+                <input type="submit" value="検索"/>
+                <button><a href='/user'>クリア</a></button>
+            </form>
+        </div>
         <div class="user">
             <table border="1">
                 <tr>
                     <th>　名前　</th>
-                    <th>　かな　</th>
+                    <th>　名前かな　</th>
                     <th>　生年月日　</th>
+                    <th>　性別　</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -23,6 +37,7 @@
                         <th>　{{$user->first_name}} {{$user->last_name}}　</th>
                         <th>　{{$user->first_name_kana}} {{$user->last_name_kana}}　</th>
                         <th> {{ $user->birth }}</th>
+                        <th> {{$user->sex}}</th>
                         <th><a href="/user/edit/{{$user->id}}">　編集　</a></th>
                         <th>
                             <form action="/user/{{ $user->id }}" id="form_{{ $user->id }}" method="post" style="display:inline">
@@ -35,6 +50,7 @@
                 @endforeach
             </table>
         </div>
+        <div class="register"><p><a href="/user/new">新規登録</a></p></div>
         <div class="back"><a href="/">戻る</a></div>
     </body>
 </html>
