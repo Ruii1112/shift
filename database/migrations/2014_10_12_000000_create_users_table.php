@@ -20,10 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('last_name_kana');
             $table->date('birth');
-            $table->integer('sex');
+            $table->string('sex');
             $table->string('login_id');
             $table->string('password');
-            $table->integer('administer')->default(0);
+            $table->integer('admin_flg')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
