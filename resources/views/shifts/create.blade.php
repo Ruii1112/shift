@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>シフト希望管理システム</h1>
-        <form action='/create/shift' method='POST'>
+        <form action='/create/shift/check' method='GET'>
             @csrf
             <div class="name">
                 <h3>名前</h3>
@@ -23,13 +23,13 @@
             <div class="time">
                 <h3>時間指定</h3>
                 <p>平日</p>
-                <input type="time" name="shift[weekday_start_time]">
+                <input type="time" name="shift[weekday_start_time]" step="1800">
                 <p style="display:inline">~</p>
-                <input type="time" name="shift[weekday_end_time]">
+                <input type="time" name="shift[weekday_end_time]" step="1800">
                 <p>休日</p>
-                <input type="time" name="shift[holiday_start_time]">
+                <input type="time" name="shift[holiday_start_time]" step="1800">
                 <p style="display:inline">~</p>
-                <input type="time" name="shift[holiday_end_time]">
+                <input type="time" name="shift[holiday_end_time]" step="1800">
             </div>
             <input type="submit" value="確認"/>
         </form>

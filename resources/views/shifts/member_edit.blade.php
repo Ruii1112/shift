@@ -26,8 +26,8 @@
             </div>
             <div class="sex">
                 <p>性別</p>
-                <label><input type="radio" name="user[sex]" value="1"/>男</label>
-                <label><input type="radio" name="user[sex]" value="0"/>女</label>
+                <label><input type="radio" name="user[sex]" value="男" @if (old('user[sex]', $user->sex) == '男') checked @endif/>男</label>
+                <label><input type="radio" name="user[sex]" value="女" @if (old('user[sex]', $user->sex) == '女') checked @endif/>女</label>
             </div>
             <div class="login_info">
                 <p>ログインID</p>

@@ -38,9 +38,9 @@
                         <th>　{{$user->first_name_kana}} {{$user->last_name_kana}}　</th>
                         <th> {{ $user->birth }}</th>
                         <th> {{$user->sex}}</th>
-                        <th><a href="/user/edit/{{$user->id}}">　編集　</a></th>
+                        <th><a href="/user/edit/{{$user->id}}" style="text-decoration:none">　編集　</a></th>
                         <th>
-                            <form action="/user/{{ $user->id }}" id="form_{{ $user->id }}" method="post" style="display:inline">
+                            <form action="/user/{{ $user->id }}" id="form_{{ $user->id }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit">削除</button> 
