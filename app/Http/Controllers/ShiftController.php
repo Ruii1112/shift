@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Shift;
 use App\User;
 use App\Time;
 use App\Comment;
 use Illuminate\Http\Request;
+use Yasumi\Yasumi;
 
 class ShiftController extends Controller
 {
@@ -64,6 +66,7 @@ class ShiftController extends Controller
         }else if (!empty($input2)){
             $query->where('last_name', 'LIKE', "%{$input2}%");
         }
+        
         $user = $query->get();
  
         return view('shifts/member')->with(['users' => $user, 'keyword1'=> $input1, 'keyword2'=>$input2]);
@@ -81,12 +84,35 @@ class ShiftController extends Controller
     {
         $input = $request['shift'];
         $shift->fill($input)->save();
-        return view('shifts/make')->with(['shifts'=>$shift->where('starting',1)->get()]);
+        return redirect('/make');
     }
     
     public function finish(Shift $shift){
         $shift->starting = 0;
         $shift->save();
         return view('shifts/make')->with(['shifts'=>$shift->where('starting',1)->get()]);
+    }
+    
+    public function shift_check(Request $request, Shift $shift)
+    {
+        $input = $request['shift'];
+        $date = [];
+        $now = new DateTime($input['start_date']);
+        $year = $now->format('Y');
+        $holiday = Yasumi::create('Japan', $year,'ja_JP');
+        //dd($now->format('w'));
+        dd((new DateTime($input['start_date']))->format('w'));
+        for ($i = $input['start_date']; $i < $input['end_date']; $i++){
+            $date[] = $i;
+            if ($holiday->isHoliday(new DateTime($i)))
+            {
+                
+            }
+        }
+        $now = new DateTime();
+        
+        //dd($holiday->isHoliday(new DateTime($i)));
+        dd($holiday);
+        return view('shifts/check')->with(['dates'=>$date, 'time'=>$input]);
     }
 }
