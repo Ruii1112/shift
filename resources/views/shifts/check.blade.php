@@ -8,11 +8,22 @@
     </head>
     <body>
         <h1>シフト希望管理システム</h1>
-        @foreach($dates as $date)
-            <p>{{$date}}</p>
-            <p>{{$time['weekday_start_time']}}</p>
-            <p>{{$time['weekday_end_time']}}</p>
-        @endforeach
-        <div class="back"><a href="/make">戻る</a></div>
+        <h3>最終調整</h3>
+        <form action="/create/shift" method="POST">
+            @csrf
+            <input type="hidden" name="shift[name]" value="{{$name}}"/>
+            <table border="1">
+            @foreach($dates as $key=>$value)
+                <tr>
+                    <th>　{{$value['date']}}　</th>
+                    <input type="hidden" name="shift[{{$key}}_date]" value="{{$value['date']}}"/>
+                    <th><input type="time" name="shift[{{$key}}_start_time]" value="{{$value['start_time']}}" step="1800"></th>
+                    <th><input type="time" name="shift[{{$key}}_end_time]" value="{{$value['end_time']}}" step="1800"></th>
+                </tr>
+            @endforeach
+            </table>
+            <input type="submit" value="確定"/>
+        </form>
+        <div class="back"><a href="/create">戻る</a></div>
     </body>
 </html>
