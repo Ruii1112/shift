@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>シフト希望管理システム</h1>
-        <p>・<a href='create'>新規作成</a><p>
+        <p>・<a href='/create'>新規作成</a><p>
         <p>・現在稼働中</p>
         @foreach ($shifts as $shift)
             <table border="1">

@@ -14,8 +14,8 @@
                 <table border="1">
                     <tr>
                         <th>　名前　</th>
-                        <th><input type="text" name="keyword1" value="{{ $keyword1 }}"/></th>
-                        <th><input type="text" name="keyword2" value="{{ $keyword2 }}"/></th>
+                        <th><input type="text" name="first_name" value="{{ $first_name }}"/></th>
+                        <th><input type="text" name="last_name" value="{{ $last_name }}"/></th>
                     </tr>
                 </table>
                 <input type="submit" value="検索"/>
