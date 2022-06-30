@@ -2,6 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <!-- jQuery-datetimepicker -->
+        <script src="https://cdn.rawgit.com/jonthornton/jquery-timepicker/3e0b283a/jquery.timepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/jonthornton/jquery-timepicker/3e0b283a/jquery.timepicker.min.css">    
         <title>Shift Manegiment</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
@@ -17,8 +22,8 @@
                 <tr>
                     <th>　{{$value['date']}}　</th>
                     <input type="hidden" name="shift[{{$key}}_date]" value="{{$value['date']}}"/>
-                    <th><input type="time" name="shift[{{$key}}_start_time]" value="{{$value['start_time']}}" step="1800"></th>
-                    <th><input type="time" name="shift[{{$key}}_end_time]" value="{{$value['end_time']}}" step="1800"></th>
+                    <th><input type="time" name="shift[{{$key}}_start_time]" value="{{$value['start_time']}}"></th>
+                    <th><input type="time" name="shift[{{$key}}_end_time]" value="{{$value['end_time']}}"></th>
                 </tr>
             @endforeach
             </table>

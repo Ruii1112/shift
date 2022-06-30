@@ -2,6 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <!-- jQuery-datetimepicker -->
+        <script src="https://cdn.rawgit.com/jonthornton/jquery-timepicker/3e0b283a/jquery.timepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/jonthornton/jquery-timepicker/3e0b283a/jquery.timepicker.min.css">        
         <title>Shift Manegiment</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
@@ -23,14 +28,28 @@
             <div class="time">
                 <h3>時間指定</h3>
                 <p>平日</p>
-                <input type="time" name="shift[weekday_start_time]" step="1800">
+                <input type="text" id="target1" name="shift[weekday_start_time]" data-time-format="H:i"/>
                 <p style="display:inline">~</p>
-                <input type="time" name="shift[weekday_end_time]" step="1800">
+                <input type="text" id="target2" name="shift[weekday_end_time]" data-time-format="H:i"/>
                 <p>休日</p>
-                <input type="time" name="shift[holiday_start_time]" step="1800">
+                <input type="text" id="target3" name="shift[holiday_start_time]" data-time-format="H:i"/>
                 <p style="display:inline">~</p>
-                <input type="time" name="shift[holiday_end_time]" step="1800">
+                <input type="text" id="target4" name="shift[holiday_end_time]" data-time-format="H:i"/>
             </div>
+            <script>
+                $('#target1').timepicker({
+                    step:30,
+                });
+                $('#target2').timepicker({
+                    step:30,
+                });
+                $('#target3').timepicker({
+                    step:30,
+                });
+                $('#target4').timepicker({
+                    step:30,
+                });
+            </script>
             <input type="submit" value="確認"/>
         </form>
         <div class="back"><a href="/make">戻る</a></div>
