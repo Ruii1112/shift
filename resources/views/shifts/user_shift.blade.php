@@ -22,17 +22,19 @@
             <table border="1">
                 <tr>
                     <th>　日時　</th>
+                    <th>　曜日　</th>
                     <th>　募集時間　</th>
                     <th>　希望開始時間　</th>
                     <th>　希望終了時間　</th>
                 <tr>
             @foreach($times as $key=>$value)
                 <tr>
-                    <th>　{{$value['date']}}　</th>
-                    <th>　{{$value['start_time']}} ~ {{$value['end_time']}}　</th>
+                    <td>　{{$value['date']}}　</td>
+                    <td>　{{$youbi[$key]}}　</td>
+                    <td>　{{$value['start_time']}} ~ {{$value['end_time']}}　</td>
                     <input type="hidden" name="time[{{$key}}_date]" value="{{$value['date']}}"/>
-                    <th><input type="time" name="time[{{$key}}_start_time]" min="{{$value['start_time']}}" max="{{$value['end_time']}}"></th>
-                    <th><input type="time" name="time[{{$key}}_end_time]" min="{{$value['start_time']}}" max="{{$value['end_time']}}"></th>
+                    <td><input type="time" name="time[{{$key}}_start_time]" min="{{$value['start_time']}}" max="{{$value['end_time']}}"></td>
+                    <td><input type="time" name="time[{{$key}}_end_time]" min="{{$value['start_time']}}" max="{{$value['end_time']}}"></td>
                 </tr>
             @endforeach
             </table>
@@ -41,6 +43,6 @@
             <p></p>
             <input type="submit" value="提出"/>
         </form>
-        </div>
+        <div><p><a href="/user/index">戻る<a></div>
     </body>
 </html>

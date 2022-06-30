@@ -13,7 +13,7 @@
             <form action="/user/search" method="GET">
                 <table border="1">
                     <tr>
-                        <th>　名前　</th>
+                        <th>　名前 or 名前かな　</th>
                         <th><input type="text" name="first_name" value="{{ $first_name }}"/></th>
                         <th><input type="text" name="last_name" value="{{ $last_name }}"/></th>
                     </tr>
@@ -34,18 +34,18 @@
                 </tr>
                 @foreach ($users as $user)
                     <tr>
-                        <th>　{{$user->first_name}} {{$user->last_name}}　</th>
-                        <th>　{{$user->first_name_kana}} {{$user->last_name_kana}}　</th>
-                        <th> {{ $user->birth }}</th>
-                        <th> {{$user->sex}}</th>
-                        <th><a href="/user/edit/{{$user->id}}" style="text-decoration:none">　編集　</a></th>
-                        <th>
+                        <td>　{{$user->first_name}} {{$user->last_name}}　</td>
+                        <td>　{{$user->first_name_kana}} {{$user->last_name_kana}}　</td>
+                        <td> {{ $user->birth }}</td>
+                        <td> {{$user->sex}}</td>
+                        <td><a href="/user/edit/{{$user->id}}" style="text-decoration:none">　編集　</a></td>
+                        <td>
                             <form action="/user/{{ $user->id }}" id="form_{{ $user->id }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit">削除</button> 
                             </form>
-                        </th>
+                        </td>
                     </tr>
                 @endforeach
             </table>

@@ -16,14 +16,16 @@
                 <table border="1">
                     <tr>
                         <th>日付</th>
+                        <th>曜日</th>
                         <th>希望開始時間</th>
                         <th>希望終了時間</th>
                     </tr>
                     @foreach($times as $time)
                         <tr>
-                            <th>{{$time['date']}}</th>
-                            <th>{{$time['start_time']}}</th>
-                            <th>{{$time['end_time']}}</th>
+                            <td>{{$time['date']}}</td>
+                            <td>{{$time['youbi']}}</td>
+                            <td>{{$time['start_time']}}</td>
+                            <td>{{$time['end_time']}}</td>
                         </tr>
                     @endforeach
                 </table>
