@@ -13,21 +13,25 @@ use Yasumi\Yasumi;
 
 class ShiftController extends Controller
 {
+    //管理者のトップページ表示
     public function index()
     {
         return view("shifts/index");
     }
     
+    //管理者用のメンバー一覧画面表示
     public function user(User $user)
     {
         return view('shifts/member')->with(['users' => $user->get(), 'first_name'=>'', 'last_name'=>'']);
     }
     
+    //管理者用のメンバーの新規登録画面表示
     public function user_new()
     {
         return view('shifts/new_member');
     }
     
+    //管理者用の新規メンバーをテーブルに登録
     public function user_store(Request $request, User $user)
     {
         $input = $request['user'];
@@ -35,11 +39,13 @@ class ShiftController extends Controller
         return redirect('/user');
     }
     
+    //管理者用のメンバーの編集画面の表示
     public function user_edit(User $user)
     {
         return view('shifts/member_edit')->with(['user'=>$user]);
     }
     
+    //管理者用のメンバーの編集情報をテーブルに再登録
     public function user_update(Request $request, User $user)
     {
         $input = $request['user'];
@@ -47,19 +53,24 @@ class ShiftController extends Controller
         return redirect('/user');
     }
     
+    //管理者用のメンバーの削除
     public function user_delete(User $user)
     {
         $user->delete();
         return redirect('/user');
     }
     
+    //管理者用のメンバー検索
     public function user_search(Request $request, User $user)
     {
+        //htmlから苗字と名前の取得
         $first_name = $request['first_name'];
         $last_name = $request['last_name'];
         
+        //Userテーブルのクエリ作成
         $query = User::query();
         
+        //入力されたボックスに何か入っているか判断→入力されたものがひらがなか判断→Userテーブルとマッチするものを探す
         if (!empty($first_name) and !empty($last_name)){
             if (preg_match("/^[あ-ゞ]+$/u", $first_name) and preg_match("/^[あ-ゞ]+$/u", $last_name)){
                 $query->where('first_name_kana', 'LIKE', "%{$first_name}%")->where('last_name_kana', 'LIKE', "%{$last_name}%");
@@ -85,36 +96,48 @@ class ShiftController extends Controller
         return view('shifts/member')->with(['users' => $user, 'first_name'=> $first_name, 'last_name'=>$last_name]);
     }
     
+    //管理者用のシフト作成画面表示
     public function make(Shift $shift){
         return view('shifts/make')->with(['shifts'=>$shift->where('starting',1)->get()]);
     }
     
+    //管理者用の新規シフト作成画面の表示
     public function create(){
         return view('shifts/create');
     }
     
+    //管理者の新規シフトの名前をShiftテーブルに保存。日時をShift_timeテーブルに保存
     public function shift_store(Request $request, Shift $shift, ShiftTime $shifttime)
     {
+        //htmlから情報を取得
         $input = $request['shift'];
+        
+        //ループの回すための最大値計算
         $num = (count($input) - 1) / 3;
+        
+        //shiftテーブルに名前を保存
         $shift->fill($input)->save();
+        
+        //shiftテーブルに保存したレコードのid取得
         $id = $shift->id;
-        //dd($input);
+        
+        //shift_timeテーブルに日時とshift_idの保存
         for($i = 0; $i < $num; $i++){
             $shifttime->fill(['date'=>$input[$i.'_date'], 'start_time'=>$input[$i.'_start_time'], 'end_time'=>$input[$i.'_end_time'], 'shift_id'=>$id])->save();
             $shifttime = new ShiftTime();
         }
-        //$shifttime->fill
-        //dd($shift->id);
+        
         return redirect('/make');
     }
     
+    //管理者用の稼働中のシフト募集の停止
     public function finish(Shift $shift){
         $shift->starting = 0;
         $shift->save();
         return view('shifts/make')->with(['shifts'=>$shift->where('starting',1)->get()]);
     }
     
+    //管理者用のシフト新規作成の最終編集
     public function shift_check(Request $request, Shift $shift)
     {
         $input = $request['shift'];
@@ -123,8 +146,8 @@ class ShiftController extends Controller
         $now = new DateTime($input['start_date']);
         $year = $now->format('Y');
         $holiday = Yasumi::create('Japan', $year,'ja_JP');
-        //dd(date($input['end_date'], strtotime("+1 day")));
-        //dd((new DateTime($input['start_date']))->format('w'));
+
+        //日付をループで回して、その日が土日祝日かどうか判定し、そうだった場合、start_timeとend_timeをそれ用の時間に設定
         for ($i = $input['start_date']; $i <= $input['end_date']; $i++){
             if ($holiday->isHoliday(new DateTime($i)) or (new DateTime($i))->format('w') == 0 or (new DateTime($i))->format('w') == 6)
             {
@@ -134,11 +157,73 @@ class ShiftController extends Controller
                 $date[] = array('date'=>$i, 'start_time'=>$input['weekday_start_time'],'end_time'=>$input['weekday_end_time']);
             }
         }
-        //dd($name);
-        //$now = new DateTime();
-        
-        //dd($holiday->isHoliday(new DateTime($i)));
-        //dd($holiday);
+
         return view('shifts/check')->with(['dates'=>$date, "name"=>$name]);
+    }
+    
+    //ユーザ用のトップページ表示
+    public function user_index(Shift $shift)
+    {
+        return view('shifts/user_index')->with(["shifts_operation"=>$shift->where("starting", "=", 1)->get(), "shifts_past"=>$shift->where("starting", "=", 0)->get()]);
+    }
+    
+     public function user_shift(Shift $shift,  ShiftTime $shifttime, User $user)
+    {
+        $times = $shifttime->where("shift_id", "=", $shift->id)->get();
+        return view('shifts/user_shift')->with(["times"=>$times, "users"=>$user->get(), 'shift'=>$shift->id]);
+    }
+    
+    public function usertime_store(Request $request, Shift $shift,  ShiftTime $shifttime, User $user, Comment $comment, Time $time)
+    {
+        $input = $request['time'];
+        $user_id = $input['user_id'];
+        $shift_id = $input['shift_id'];
+        
+        if ($time->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get()->isNotEmpty()){
+            return view('shifts/submitted');
+        }
+        
+        $num = (count($input) - 3) / 3;
+        
+        if (!empty($input['comment']))
+        {
+            $comment->fill(['sentence'=>$input['comment'], 'user_id'=>$user_id, 'shift_id'=>$shift_id])->save();
+        }
+        
+        for ($i = 0; $i < $num; $i++)
+        {
+            if (!empty($input[$i.'_start_time']))
+            {
+                $time->fill(['date'=>$input[$i.'_date'], 'start_time'=>$input[$i.'_start_time'], 'end_time'=>$input[$i.'_end_time'], 'user_id'=>$user_id, 'shift_id'=>$shift_id])->save();
+            }
+        }
+       
+       return redirect('/user/index');
+    }
+    
+    public function user_past(Shift $shift, User $user)
+    {
+        return view('shifts/user_past')->with(["shifts"=>$shift, "users"=>$user->get()]);
+    }
+    
+    public function user_check(Request $request, Shift $shift, User $user, ShiftTime $shifttime, Time $time, Comment $comment)
+    {
+        $user_id = $request['name'];
+        $shift_id = $shift->id;
+        $shift_time = $shifttime->where('shift_id', "=", $shift_id)->get();
+        $user_time = $time->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get();
+
+        $shifts = [];
+        for ($i = 0; $i < count($shift_time); $i++){
+            for ($j = 0; $j < count($user_time); $j++){
+                if ($shift_time[$i]->date === $user_time[$j]->date){
+                    $shifts[] = array('date'=>$user_time[$j]->date, 'start_time'=>$user_time[$j]->start_time, 'end_time'=>$user_time[$j]->end_time);
+                    continue;
+                }
+            $shifts[] = array('date'=>$shift_time[$i]->date, 'start_time'=>null, 'end_time'=>null);
+            }
+        }
+        //dd($comment->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get());
+        return view('shifts/user_check')->with(['user'=>$user->where('id', '=', $user_id)->get(), 'shift'=>$shift, 'times'=>$shifts, 'comment'=>$comment->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get()]);
     }
 }

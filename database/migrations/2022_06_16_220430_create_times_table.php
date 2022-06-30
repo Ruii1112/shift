@@ -18,7 +18,7 @@ class CreateTimesTable extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->integer('use_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->integer('shift_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
