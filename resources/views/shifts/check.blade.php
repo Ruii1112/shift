@@ -20,10 +20,10 @@
             <table border="1">
             @foreach($dates as $key=>$value)
                 <tr>
-                    <th>　{{$value['date']}}　</th>
+                    <td>　{{$value['date']}}　</td>
                     <input type="hidden" name="shift[{{$key}}_date]" value="{{$value['date']}}"/>
-                    <th><input type="time" name="shift[{{$key}}_start_time]" value="{{$value['start_time']}}"></th>
-                    <th><input type="time" name="shift[{{$key}}_end_time]" value="{{$value['end_time']}}"></th>
+                    <td><input type="time" name="shift[{{$key}}_start_time]" value="{{$value['start_time']}}"></td>
+                    <td><input type="time" name="shift[{{$key}}_end_time]" value="{{$value['end_time']}}"></td>
                 </tr>
             @endforeach
             </table>

@@ -170,7 +170,13 @@ class ShiftController extends Controller
      public function user_shift(Shift $shift,  ShiftTime $shifttime, User $user)
     {
         $times = $shifttime->where("shift_id", "=", $shift->id)->get();
-        return view('shifts/user_shift')->with(["times"=>$times, "users"=>$user->get(), 'shift'=>$shift->id]);
+        $youbi_list = ['日','月','火','水','木','金','土','日'];
+        $youbi = [];
+        for ($i = 0 ; $i < count($times) ; $i++){
+            $youbi[] = $youbi_list[(new DateTime($times[$i]->date))->format('w')];
+        }
+
+        return view('shifts/user_shift')->with(["times"=>$times, "users"=>$user->get(), 'shift'=>$shift->id, 'youbi'=>$youbi]);
     }
     
     public function usertime_store(Request $request, Shift $shift,  ShiftTime $shifttime, User $user, Comment $comment, Time $time)
@@ -212,18 +218,74 @@ class ShiftController extends Controller
         $shift_id = $shift->id;
         $shift_time = $shifttime->where('shift_id', "=", $shift_id)->get();
         $user_time = $time->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get();
+        $youbi_list = ['日','月','火','水','木','金','土','日'];
 
         $shifts = [];
         for ($i = 0; $i < count($shift_time); $i++){
+            $flag = 0;
             for ($j = 0; $j < count($user_time); $j++){
                 if ($shift_time[$i]->date === $user_time[$j]->date){
-                    $shifts[] = array('date'=>$user_time[$j]->date, 'start_time'=>$user_time[$j]->start_time, 'end_time'=>$user_time[$j]->end_time);
-                    continue;
+                    $shifts[] = array('date'=>$user_time[$j]->date, 'youbi'=>$youbi_list[(new DateTime($user_time[$j]->date))->format('w')], 'start_time'=>$user_time[$j]->start_time, 'end_time'=>$user_time[$j]->end_time);
+                    $flag = 1;
+                    break;
                 }
-            $shifts[] = array('date'=>$shift_time[$i]->date, 'start_time'=>null, 'end_time'=>null);
+            }
+            if ($flag === 0){
+                $shifts[] = array('date'=>$shift_time[$i]->date, 'youbi'=>$youbi_list[(new DateTime($shift_time[$i]->date))->format('w')], 'start_time'=>null, 'end_time'=>null);
             }
         }
-        //dd($comment->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get());
+
         return view('shifts/user_check')->with(['user'=>$user->where('id', '=', $user_id)->get(), 'shift'=>$shift, 'times'=>$shifts, 'comment'=>$comment->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get()]);
+    }
+    
+    public function output(Shift $shift)
+    {
+        return view('shifts/output')->with(["shifts"=>$shift->where("starting", "=", 0)->get()]);;
+    }
+    
+    public function output_table(Shift $shift, User $user, ShiftTime $shifttime, Time $time, Comment $comment)
+    {
+        $all_user = $user->get();
+        $date = $shifttime->where('shift_id', '=', $shift->id)->get();
+        $user_time = [[]];
+        $user_comment = [];
+        $youbi_list = ['日','月','火','水','木','金','土','日'];
+        $youbi = [];
+        //$all_time = $time->where('shift_id', '=', $shift->id)->get();
+        
+        for ($i = 0 ; $i < count($date) ; $i++){
+            for ($j = 1 ; $j <= count($all_user) ; $j++){
+                if ($time->where('user_id', '=', $j)->where('shift_id', '=', $shift->id)->where('date', '=', $date[$i]->date)->get()->isNotEmpty()){
+                    $tmp = $time->where('user_id', '=', $j)->where('shift_id', '=', $shift->id)->where('date', '=', $date[$i]->date)->get();
+                    $user_time[$i][] = $tmp[0]->start_time;
+                    $user_time[$i][] = $tmp[0]->end_time;
+                }else{
+                    $user_time[$i][] = null;
+                    $user_time[$i][] = null;
+                }
+            }
+        }
+        
+        for ($i = 1 ; $i <= count($all_user) ; $i++){
+            if ($comment->where('user_id', '=', $i)->where('shift_id', '=', $shift->id)->get()->isNotEmpty()){
+                $tmp = $comment->where('user_id', '=', $i)->where('shift_id', '=', $shift->id)->get();
+                $user_comment[] = $tmp[0]->sentence;
+            }else{
+                $user_comment[] = null;
+            }
+        }
+        
+        $index_date = range(0, count($date) - 1);
+        
+        $index_user = range(0, count($all_user) * 2 - 1);
+        
+        for ($i = 0 ; $i < count($date) ; $i++){
+            $youbi[] = $youbi_list[(new DateTime($date[$i]->date))->format('w')];
+        }
+        
+        //dd($youbi);
+        
+        return view('shifts/output_table')->with(['shift'=>$shift, 'users'=>$all_user, 'shifttime'=>$date, 'indices_date'=>$index_date, 'youbi'=>$youbi, 'indices_user'=>$index_user, 'user_time'=>$user_time, 'comments'=>$user_comment]);
+        
     }
 }

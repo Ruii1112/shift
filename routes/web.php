@@ -18,3 +18,5 @@ Route::get('/finish/{shift}', 'ShiftController@finish');
 Route::post('/create/shift', 'ShiftController@shift_store');
 Route::put('/user/edit/update/{user}', 'ShiftController@user_update');
 Route::delete('/user/{user}', 'ShiftController@user_delete');
+Route::get('/output', 'ShiftController@output');
+Route::get('/output/{shift}', 'ShiftController@output_table');
