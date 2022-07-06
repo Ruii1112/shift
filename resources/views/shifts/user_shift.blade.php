@@ -11,12 +11,15 @@
         <h2>シフト希望</h2>
         <form action="/user/shift/submit" method="POST">
             @csrf
+            <div class="name_select">
             <h3>名前</h3>
             <select name="time[user_id]">
                 @foreach($users as $user)
                     <option value={{ $user->id }}>{{$user->first_name}} {{$user->last_name}}</option>
                 @endforeach
             </select>
+            </div>
+            <div class="shift">
             <h3>希望</h3>
                 <input type="hidden" name="time[shift_id]" value="{{$shift}}"/>
             <table border="1">
@@ -40,6 +43,7 @@
             </table>
             <h3>コメント</h3>
                 <textarea name="time[comment]"></textarea>
+            </div>
             <p></p>
             <input type="submit" value="提出"/>
         </form>
