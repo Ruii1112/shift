@@ -28,26 +28,17 @@
             <div class="time">
                 <h3>時間指定</h3>
                 <p>平日</p>
-                <input type="text" id="target1" name="shift[weekday_start_time]" data-time-format="H:i"/>
+                <input type="text" class="timepicker" name="shift[weekday_start_time]" data-time-format="H:i"/>
                 <p style="display:inline">~</p>
-                <input type="text" id="target2" name="shift[weekday_end_time]" data-time-format="H:i"/>
+                <input type="text" class="timepicker" name="shift[weekday_end_time]" data-time-format="H:i"/>
                 <p>休日</p>
-                <input type="text" id="target3" name="shift[holiday_start_time]" data-time-format="H:i"/>
+                <input type="text" class="timepicker" name="shift[holiday_start_time]" data-time-format="H:i"/>
                 <p style="display:inline">~</p>
-                <input type="text" id="target4" name="shift[holiday_end_time]" data-time-format="H:i"/>
+                <input type="text" class="timepicker" name="shift[holiday_end_time]" data-time-format="H:i"/>
             </div>
             <script>
-                $('#target1').timepicker({
-                    step:30,
-                });
-                $('#target2').timepicker({
-                    step:30,
-                });
-                $('#target3').timepicker({
-                    step:30,
-                });
-                $('#target4').timepicker({
-                    step:30,
+                $('.timepicker').timepicker({
+                    step:30
                 });
             </script>
             <input type="submit" value="確認"/>

@@ -19,4 +19,9 @@ class Shift extends Model
     {
         return $this->hasMany('App\Comment');
     }
+    
+    public function times()
+    {
+        return $this->hasMany('App\Time');
+    }
 }

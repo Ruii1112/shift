@@ -20,3 +20,6 @@ Route::put('/user/edit/update/{user}', 'ShiftController@user_update');
 Route::delete('/user/{user}', 'ShiftController@user_delete');
 Route::get('/output', 'ShiftController@output');
 Route::get('/output/{shift}', 'ShiftController@output_table');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

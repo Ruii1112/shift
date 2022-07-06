@@ -10,6 +10,7 @@ use App\Comment;
 use App\ShiftTime;
 use Illuminate\Http\Request;
 use Yasumi\Yasumi;
+use Illuminate\Support\Facades\Hash;
 
 class ShiftController extends Controller
 {
@@ -35,6 +36,7 @@ class ShiftController extends Controller
     public function user_store(Request $request, User $user)
     {
         $input = $request['user'];
+        $input['password'] = Hash::make($input['password']);
         $user->fill($input)->save();
         return redirect('/user');
     }
@@ -146,8 +148,10 @@ class ShiftController extends Controller
         $now = new DateTime($input['start_date']);
         $year = $now->format('Y');
         $holiday = Yasumi::create('Japan', $year,'ja_JP');
+        $youbi_list = ['日','月','火','水','木','金','土','日'];
+        $youbi = [];
 
-        //日付をループで回して、その日が土日祝日かどうか判定し、そうだった場合、start_timeとend_timeをそれ用の時間に設定
+        //日付をループで回して、その日が土日祝日かどうか判定し、そうだった場合、start_timeとend_timeをそれ用の時間に設定.曜日も格納
         for ($i = $input['start_date']; $i <= $input['end_date']; $i++){
             if ($holiday->isHoliday(new DateTime($i)) or (new DateTime($i))->format('w') == 0 or (new DateTime($i))->format('w') == 6)
             {
@@ -156,9 +160,11 @@ class ShiftController extends Controller
             {
                 $date[] = array('date'=>$i, 'start_time'=>$input['weekday_start_time'],'end_time'=>$input['weekday_end_time']);
             }
+            $youbi[] = $youbi_list[(new DateTime($i))->format('w')];
         }
+        
 
-        return view('shifts/check')->with(['dates'=>$date, "name"=>$name]);
+        return view('shifts/check')->with(['dates'=>$date, "name"=>$name, 'youbi'=>$youbi]);
     }
     
     //ユーザ用のトップページ表示
@@ -167,6 +173,7 @@ class ShiftController extends Controller
         return view('shifts/user_index')->with(["shifts_operation"=>$shift->where("starting", "=", 1)->get(), "shifts_past"=>$shift->where("starting", "=", 0)->get()]);
     }
     
+    //ユーザ用のシフト提出画面表示
      public function user_shift(Shift $shift,  ShiftTime $shifttime, User $user)
     {
         $times = $shifttime->where("shift_id", "=", $shift->id)->get();
@@ -179,23 +186,27 @@ class ShiftController extends Controller
         return view('shifts/user_shift')->with(["times"=>$times, "users"=>$user->get(), 'shift'=>$shift->id, 'youbi'=>$youbi]);
     }
     
+    //ユーザが提出した希望シフトの保存
     public function usertime_store(Request $request, Shift $shift,  ShiftTime $shifttime, User $user, Comment $comment, Time $time)
     {
         $input = $request['time'];
         $user_id = $input['user_id'];
         $shift_id = $input['shift_id'];
         
+        //もし、timesテーブルに提出したユーザのデータがあった場合キャンセル
         if ($time->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get()->isNotEmpty()){
             return view('shifts/submitted');
         }
         
         $num = (count($input) - 3) / 3;
         
+        //ユーザのコメントをcommentテーブルに保存
         if (!empty($input['comment']))
         {
             $comment->fill(['sentence'=>$input['comment'], 'user_id'=>$user_id, 'shift_id'=>$shift_id])->save();
         }
         
+        //ユーザの希望時間をtimeテーブルに保存
         for ($i = 0; $i < $num; $i++)
         {
             if (!empty($input[$i.'_start_time']))
@@ -207,11 +218,13 @@ class ShiftController extends Controller
        return redirect('/user/index');
     }
     
+    //ユーザ用の過去の希望のページ遷移
     public function user_past(Shift $shift, User $user)
     {
         return view('shifts/user_past')->with(["shifts"=>$shift, "users"=>$user->get()]);
     }
     
+    //ユーザ用の過去の希望の閲覧
     public function user_check(Request $request, Shift $shift, User $user, ShiftTime $shifttime, Time $time, Comment $comment)
     {
         $user_id = $request['name'];
@@ -221,6 +234,8 @@ class ShiftController extends Controller
         $youbi_list = ['日','月','火','水','木','金','土','日'];
 
         $shifts = [];
+        
+        //日付を1日ずつ回し、その日にユーザが希望を出していたら、その時間を格納し、出していなかったら、nullを格納
         for ($i = 0; $i < count($shift_time); $i++){
             $flag = 0;
             for ($j = 0; $j < count($user_time); $j++){
@@ -238,11 +253,13 @@ class ShiftController extends Controller
         return view('shifts/user_check')->with(['user'=>$user->where('id', '=', $user_id)->get(), 'shift'=>$shift, 'times'=>$shifts, 'comment'=>$comment->where('user_id', '=', $user_id)->where('shift_id', '=', $shift_id)->get()]);
     }
     
+    //管理者用のシフト出力ページ表示
     public function output(Shift $shift)
     {
         return view('shifts/output')->with(["shifts"=>$shift->where("starting", "=", 0)->get()]);;
     }
     
+    //管理者用のシフト出力（表形式で表示）
     public function output_table(Shift $shift, User $user, ShiftTime $shifttime, Time $time, Comment $comment)
     {
         $all_user = $user->get();
@@ -251,8 +268,8 @@ class ShiftController extends Controller
         $user_comment = [];
         $youbi_list = ['日','月','火','水','木','金','土','日'];
         $youbi = [];
-        //$all_time = $time->where('shift_id', '=', $shift->id)->get();
         
+        //日付を1日ずつ回し、その日にユーザが希望を出していたら、その時間を格納し、出していなかったら、nullを格納
         for ($i = 0 ; $i < count($date) ; $i++){
             for ($j = 1 ; $j <= count($all_user) ; $j++){
                 if ($time->where('user_id', '=', $j)->where('shift_id', '=', $shift->id)->where('date', '=', $date[$i]->date)->get()->isNotEmpty()){
@@ -266,6 +283,7 @@ class ShiftController extends Controller
             }
         }
         
+        //ユーザのコメントを格納
         for ($i = 1 ; $i <= count($all_user) ; $i++){
             if ($comment->where('user_id', '=', $i)->where('shift_id', '=', $shift->id)->get()->isNotEmpty()){
                 $tmp = $comment->where('user_id', '=', $i)->where('shift_id', '=', $shift->id)->get();
@@ -283,9 +301,6 @@ class ShiftController extends Controller
             $youbi[] = $youbi_list[(new DateTime($date[$i]->date))->format('w')];
         }
         
-        //dd($youbi);
-        
         return view('shifts/output_table')->with(['shift'=>$shift, 'users'=>$all_user, 'shifttime'=>$date, 'indices_date'=>$index_date, 'youbi'=>$youbi, 'indices_user'=>$index_user, 'user_time'=>$user_time, 'comments'=>$user_comment]);
-        
     }
 }

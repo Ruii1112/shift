@@ -29,12 +29,6 @@
                 <label><input type="radio" name="user[sex]" value="男" @if (old('user[sex]', $user->sex) == '男') checked @endif/>男</label>
                 <label><input type="radio" name="user[sex]" value="女" @if (old('user[sex]', $user->sex) == '女') checked @endif/>女</label>
             </div>
-            <div class="login_info">
-                <p>ログインID</p>
-                <input type="text" name="user[login_id]" value="{{$user->login_id}}"/>
-                <p>ログインパスワード</p>
-                <input type="text" name="user[password]" value="{{$user->password}}"/>
-            </div>
             <input type="submit" value="更新"/>
         </fprm>
         <div class="back"><a href="/user">戻る</a></div>
