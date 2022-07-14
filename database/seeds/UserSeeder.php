@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,14 +15,15 @@ class UserSeeder extends Seeder
     {
         User::create([
             'id' => 1,
-            'first_name' => '井上',
-            'first_name_kana' => 'いのうえ',
-            'last_name' => '瑠威',
-            'last_name_kana' => 'るい',
-            'birth' => '1998-11-12',
+            'first_name' => '管理者',
+            'first_name_kana' => 'かんりしゃ',
+            'last_name' => '管理者',
+            'last_name_kana' => 'かんりしゃ',
+            'birth' => '2022-1-1',
             'sex' => '男',
-            'login_id' => '10004929',
-            'password' => 'a10004929',
+            'login_id' => '10000000',
+            'password' => Hash::make('a10000000'),
+            'admin_flg' => 1,
         ]);
     }
 }
