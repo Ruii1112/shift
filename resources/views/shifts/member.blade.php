@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Shift Manegiment</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <h1>シフト希望管理システム</h1>
+@extends('layouts.app')
+
+@section('content')
         <div class="search">
             <h3>検索</h3>
             <form action="/user/search" method="GET">
@@ -52,5 +45,5 @@
         </div>
         <div class="register"><p><a href="/user/new">新規登録</a></p></div>
         <div class="back"><a href="/">戻る</a></div>
-    </body>
-</html>
+
+@endsection

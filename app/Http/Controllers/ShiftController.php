@@ -11,9 +11,19 @@ use App\ShiftTime;
 use Illuminate\Http\Request;
 use Yasumi\Yasumi;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class ShiftController extends Controller
 {
+    //ログイン時に管理者とユーザを分ける
+    public function distinct()
+    {
+        if (Auth::user()->admin_flg){
+            return redirect('/');
+        }
+        return redirect('/user/index');
+    }
+    
     //管理者のトップページ表示
     public function index()
     {
@@ -23,7 +33,7 @@ class ShiftController extends Controller
     //管理者用のメンバー一覧画面表示
     public function user(User $user)
     {
-        return view('shifts/member')->with(['users' => $user->get(), 'first_name'=>'', 'last_name'=>'']);
+        return view('shifts/member')->with(['users' => $user->where('admin_flg','=',0)->get(), 'first_name'=>'', 'last_name'=>'']);
     }
     
     //管理者用のメンバーの新規登録画面表示
@@ -183,7 +193,7 @@ class ShiftController extends Controller
             $youbi[] = $youbi_list[(new DateTime($times[$i]->date))->format('w')];
         }
 
-        return view('shifts/user_shift')->with(["times"=>$times, "users"=>$user->get(), 'shift'=>$shift->id, 'youbi'=>$youbi]);
+        return view('shifts/user_shift')->with(["times"=>$times, "users"=>$user->where('admin_flg', '=', 0)->get(), 'shift'=>$shift->id, 'youbi'=>$youbi]);
     }
     
     //ユーザが提出した希望シフトの保存

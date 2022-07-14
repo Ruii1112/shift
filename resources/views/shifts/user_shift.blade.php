@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Shift Manegiment</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <h1>シフト希望管理システム</h1>
+@extends('layouts.app')
+
+@section('content')
         <h2>シフト希望</h2>
         <form action="/user/shift/submit" method="POST">
             @csrf
@@ -36,17 +29,16 @@
                     <td>　{{$youbi[$key]}}　</td>
                     <td>　{{$value['start_time']}} ~ {{$value['end_time']}}　</td>
                     <input type="hidden" name="time[{{$key}}_date]" value="{{$value['date']}}"/>
-                    <td><input type="time" name="time[{{$key}}_start_time]" min="{{$value['start_time']}}" max="{{$value['end_time']}}"></td>
-                    <td><input type="time" name="time[{{$key}}_end_time]" min="{{$value['start_time']}}" max="{{$value['end_time']}}"></td>
+                    <td><time-component name="time[{{$key}}_start_time]"/></td>
+                    <td><time-component name="time[{{$key}}_end_time]"/></td>
                 </tr>
             @endforeach
             </table>
             <h3>コメント</h3>
-                <textarea name="time[comment]"></textarea>
+                <textarea name="time[comment]" cols="80" rows="10"></textarea>
             </div>
             <p></p>
             <input type="submit" value="提出"/>
         </form>
         <div><p><a href="/user/index">戻る<a></div>
-    </body>
-</html>
+@endsection
