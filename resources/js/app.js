@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('time-component', require('./components/TimeComponent.vue').default);
+Vue.component('reflection-component', require('./components/ReflectionComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

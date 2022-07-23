@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \URL::forceScheme('https');
+        
+        Validator::extend('kana', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[ぁ-ゞ]+$/u', $value);
+        });
     }
 }

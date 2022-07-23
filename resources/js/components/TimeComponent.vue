@@ -8,7 +8,8 @@
         minute-interval="30"
         advanced-keyboard
         manual-input
-        auto-scroll>
+        auto-scroll
+        @change="onChange">
     </vue-timepicker>
 </template>
 
@@ -22,12 +23,17 @@
         props: {
             name: {
                 type: String,
-                required: true,
+                default: "",
             },
             value: {
                 type: String,
                 default: "",
             }
-        }
+        },
+        methods: {
+          onChange: function() {
+              console.log('変更されました')
+          }
+      }
     }
 </script>
