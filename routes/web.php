@@ -7,8 +7,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/', 'ShiftController@index');
     Route::get('/user/index','ShiftController@user_index');
     Route::get('/user', 'ShiftController@user');
-    Route::get('/user/shift/past/{shift}', 'ShiftController@user_past');
-    Route::get('/user/past/{shift}', 'ShiftController@user_check');
+    Route::get('/user/shift/past/{shift}', 'ShiftController@user_check');
     Route::get('/user/shift/{shift}', 'ShiftController@user_shift');
     Route::get('/user/new', 'ShiftController@user_new');
     Route::get('/user/edit/{user}', 'ShiftController@user_edit');
@@ -24,6 +23,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/user/{user}', 'ShiftController@user_delete');
     Route::get('/output', 'ShiftController@output');
     Route::get('/output/{shift}', 'ShiftController@output_table');
+    Route::get('/sheet', 'SpreadSheetController@store');
 });
 
 

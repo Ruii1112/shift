@@ -3,7 +3,7 @@
 @section('content')
         <div class="check">
             <div class="user_name">
-                <p>{{$user[0]->first_name}}さんの{{$shift->name}}の提出内容確認</p>
+                <p>{{Auth::user()->first_name}}さんの{{$shift->name}}の提出内容確認</p>
             </div>
             <div class='shift'>
                 <table border="1">
@@ -25,7 +25,7 @@
             </div>
             <div class="comment">
                 <h3>コメント</h3>
-                <p>{{$comment[0]->sentence}}</p>
+                <p>{{$comment}}</p>
             </div>
         </div>
         <div class="back"><p><a href="/user/index">戻る</a></p>
