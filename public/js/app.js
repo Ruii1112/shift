@@ -1919,7 +1919,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      youbilist: ['月', '火', '水', '木', '金', '土', '日']
+      youbilist: ['月', '火', '水', '木', '金', '土', '日'],
+      time: ''
     };
   },
   props: {
@@ -1933,6 +1934,44 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onChange: function onChange() {
       console.log('変更されました');
+    },
+    nameDecision: function nameDecision(youbi, check) {
+      var name;
+
+      switch (youbi) {
+        case "月":
+          name = 'mon_' + check;
+          break;
+
+        case "火":
+          name = 'tue_' + check;
+          break;
+
+        case "水":
+          name = 'wed_' + check;
+          break;
+
+        case "木":
+          name = 'thu_' + check;
+          break;
+
+        case "金":
+          name = 'fri_' + check;
+          break;
+
+        case "土":
+          name = 'sat_' + check;
+          break;
+
+        case "日":
+          name = 'sun_' + check;
+          break;
+
+        default:
+          name = "";
+      }
+
+      return name;
     }
   }
 });
@@ -1963,11 +2002,6 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       "default": ""
     }
-  },
-  methods: {
-    onChange: function onChange() {
-      console.log('変更されました');
-    }
   }
 });
 
@@ -1997,8 +2031,9 @@ var render = function render() {
       border: "1"
     }
   }, [_vm._m(0), _vm._v(" "), _vm._l(_vm.youbilist, function (youbi) {
-    return [_c("tr", [_c("td", [_vm._v(_vm._s(youbi))]), _vm._v(" "), _c("td", [_c("vue-timepicker", {
+    return _c("tr", [_c("td", [_vm._v(_vm._s(youbi))]), _vm._v(" "), _c("td", [_c("vue-timepicker", {
       attrs: {
+        name: _vm.nameDecision(youbi, "start"),
         placeholder: "時間を入力",
         "hour-label": "時",
         "minute-label": "分",
@@ -2009,6 +2044,7 @@ var render = function render() {
       }
     }), _vm._v(" ~ \n                        "), _c("vue-timepicker", {
       attrs: {
+        name: _vm.nameDecision(youbi, "end"),
         placeholder: "時間を入力",
         "hour-label": "時",
         "minute-label": "分",
@@ -2017,7 +2053,7 @@ var render = function render() {
         "manual-input": "",
         "auto-scroll": ""
       }
-    })], 1)])];
+    })], 1)]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "participate"
   }, [_c("h3", [_vm._v("希望")]), _vm._v(" "), _c("table", {
@@ -2087,9 +2123,6 @@ var render = function render() {
       "advanced-keyboard": "",
       "manual-input": "",
       "auto-scroll": ""
-    },
-    on: {
-      change: _vm.onChange
     }
   });
 };

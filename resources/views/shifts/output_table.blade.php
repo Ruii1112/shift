@@ -3,6 +3,9 @@
 @section('content')
         <div class="output">
             <h2>{{$shift->name}}</h2>
+            
+            <a href="/sheet/{{$shift->id}}">・スプレッドシート</a>
+            
             <table border="1">
                 <div class="user">
                     <tr>

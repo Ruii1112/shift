@@ -9,7 +9,7 @@
         advanced-keyboard
         manual-input
         auto-scroll
-        @change="onChange">
+        >
     </vue-timepicker>
 </template>
 
@@ -29,11 +29,6 @@
                 type: String,
                 default: "",
             }
-        },
-        methods: {
-          onChange: function() {
-              console.log('変更されました')
-          }
-      }
+        }
     }
 </script>
