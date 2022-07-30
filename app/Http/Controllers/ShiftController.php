@@ -282,8 +282,8 @@ class ShiftController extends Controller
         $user_id = Auth::user()->id;
         $shift_id = $input['shift_id'];
         
-        $num = (count($input) - 3) / 3;
-        
+        $num = (count($input) - 2) / 3;
+        //dd($input);
         //ユーザのコメントをcommentテーブルに保存
         if (!empty($input['comment']))
         {
@@ -291,11 +291,12 @@ class ShiftController extends Controller
         }
         
         //ユーザの希望時間をtimeテーブルに保存
-        for ($i = 0; $i < $num; $i++)
+        for ($i = 0; $i <= $num; $i++)
         {
             if (!empty($input[$i.'_start_time']))
             {
                 $time->fill(['date'=>$input[$i.'_date'], 'start_time'=>$input[$i.'_start_time'], 'end_time'=>$input[$i.'_end_time'], 'user_id'=>$user_id, 'shift_id'=>$shift_id])->save();
+                $time = new Time;
             }
         }
        
@@ -375,9 +376,9 @@ class ShiftController extends Controller
         }
         
         //ユーザのコメントを格納
-        for ($i = 1 ; $i <= count($all_user) ; $i++){
-            if ($comment->where('user_id', '=', $i)->where('shift_id', '=', $shift->id)->get()->isNotEmpty()){
-                $tmp = $comment->where('user_id', '=', $i)->where('shift_id', '=', $shift->id)->get();
+        for ($i = 0 ; $i < count($all_user) ; $i++){
+            if ($comment->where('user_id', '=', $all_user[$i]->id)->where('shift_id', '=', $shift->id)->get()->isNotEmpty()){
+                $tmp = $comment->where('user_id', '=', $all_user[$i]->id)->where('shift_id', '=', $shift->id)->get();
                 $user_comment[] = $tmp[0]->sentence;
             }else{
                 $user_comment[] = null;
@@ -391,6 +392,7 @@ class ShiftController extends Controller
         for ($i = 0 ; $i < count($date) ; $i++){
             $youbi[] = $youbi_list[(new DateTime($date[$i]->date))->format('w')];
         }
+        
         
         return view('shifts/output_table')->with(['shift'=>$shift, 'users'=>$all_user, 'shifttime'=>$date, 'indices_date'=>$index_date, 'youbi'=>$youbi, 'indices_user'=>$index_user, 'user_time'=>$user_time, 'comments'=>$user_comment]);
     }

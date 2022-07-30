@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/user/{user}', 'ShiftController@user_delete');
     Route::get('/output', 'ShiftController@output');
     Route::get('/output/{shift}', 'ShiftController@output_table');
-    Route::get('/sheet', 'SpreadSheetController@store');
+    Route::get('/sheet/{shift}', 'SpreadSheetController@store');
 });
 
 
