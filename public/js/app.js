@@ -1920,7 +1920,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       youbilist: ['月', '火', '水', '木', '金', '土', '日'],
-      time: ''
+      time: '',
+      start_value: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+      end_value: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
     };
   },
   props: {
@@ -1932,9 +1934,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    onChange: function onChange() {
-      console.log('変更されました');
-    },
     nameDecision: function nameDecision(youbi, check) {
       var name;
 
@@ -1972,6 +1971,52 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return name;
+    },
+    reflect: function reflect() {
+      var test = [];
+      var setting_rows = document.getElementsByClassName('setting_youbi');
+
+      for (var i = 0; i < setting_rows.length; i++) {
+        var start = setting_rows[i].getElementsByClassName('start');
+        var start_input = start[0].getElementsByTagName('input');
+        var end = setting_rows[i].getElementsByClassName('end');
+        var end_input = end[0].getElementsByTagName('input');
+        var day = setting_rows[i].getElementsByClassName('day');
+        var day_input = day[0].innerHTML;
+        test[day_input] = {
+          'start': start_input[0].value,
+          'end': end_input[0].value
+        };
+      }
+
+      var want_rows = document.getElementsByClassName('want_youbi');
+
+      for (var _i = 0; _i < want_rows.length; _i++) {
+        var youbi_test = want_rows[_i].getElementsByClassName('day')[0].innerHTML;
+
+        if (youbi_test == '月') {
+          this.start_value.splice(_i, 1, test['月'].start);
+          this.end_value.splice(_i, 1, test['月'].end);
+        } else if (youbi_test == '火') {
+          this.start_value.splice(_i, 1, test['火'].start);
+          this.end_value.splice(_i, 1, test['火'].end);
+        } else if (youbi_test == '水') {
+          this.start_value.splice(_i, 1, test['水'].start);
+          this.end_value.splice(_i, 1, test['水'].end);
+        } else if (youbi_test == '木') {
+          this.start_value.splice(_i, 1, test['木'].start);
+          this.end_value.splice(_i, 1, test['木'].end);
+        } else if (youbi_test == '金') {
+          this.start_value.splice(_i, 1, test['金'].start);
+          this.end_value.splice(_i, 1, test['金'].end);
+        } else if (youbi_test == '土') {
+          this.start_value.splice(_i, 1, test['土'].start);
+          this.end_value.splice(_i, 1, test['土'].end);
+        } else if (youbi_test == '日') {
+          this.start_value.splice(_i, 1, test['日'].start);
+          this.end_value.splice(_i, 1, test['日'].end);
+        }
+      }
     }
   }
 });
@@ -1993,6 +2038,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     'vue-timepicker': vue2_timepicker_src_vue_timepicker_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  //data(){
+  //    return{
+  //        value: ""
+  //    }
+  //},
   props: {
     name: {
       type: String,
@@ -2023,17 +2073,23 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "reflect"
+    staticClass: "reflectiton"
   }, [_c("div", {
     staticClass: "table"
   }, [_c("h3", [_vm._v("一括設定")]), _vm._v(" "), _c("table", {
+    staticClass: "setting",
     attrs: {
       border: "1"
     }
   }, [_vm._m(0), _vm._v(" "), _vm._l(_vm.youbilist, function (youbi) {
-    return _c("tr", [_c("td", [_vm._v(_vm._s(youbi))]), _vm._v(" "), _c("td", [_c("vue-timepicker", {
+    return _c("tr", {
+      staticClass: "setting_youbi"
+    }, [_c("td", {
+      staticClass: "day"
+    }, [_vm._v(_vm._s(youbi))]), _vm._v(" "), _c("td", {
+      staticClass: "start"
+    }, [_c("vue-timepicker", {
       attrs: {
-        name: _vm.nameDecision(youbi, "start"),
         placeholder: "時間を入力",
         "hour-label": "時",
         "minute-label": "分",
@@ -2042,9 +2098,10 @@ var render = function render() {
         "manual-input": "",
         "auto-scroll": ""
       }
-    }), _vm._v(" ~ \n                        "), _c("vue-timepicker", {
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "end"
+    }, [_c("vue-timepicker", {
       attrs: {
-        name: _vm.nameDecision(youbi, "end"),
         placeholder: "時間を入力",
         "hour-label": "時",
         "minute-label": "分",
@@ -2054,14 +2111,27 @@ var render = function render() {
         "auto-scroll": ""
       }
     })], 1)]);
-  })], 2)]), _vm._v(" "), _c("div", {
+  })], 2), _vm._v(" "), _c("input", {
+    attrs: {
+      type: "button",
+      value: "一括反映"
+    },
+    on: {
+      click: _vm.reflect
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "participate"
   }, [_c("h3", [_vm._v("希望")]), _vm._v(" "), _c("table", {
+    staticClass: "want",
     attrs: {
       border: "1"
     }
   }, [_vm._m(1), _vm._v(" "), _vm._l(_vm.times, function (time, index) {
-    return _c("tr", [_c("td", [_vm._v(_vm._s(time.date))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.youbi_shift[index]))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(time.start_time) + " ～ " + _vm._s(time.end_time))]), _vm._v(" "), _c("input", {
+    return _c("tr", {
+      staticClass: "want_youbi"
+    }, [_c("td", [_vm._v(_vm._s(time.date))]), _vm._v(" "), _c("td", {
+      staticClass: "day"
+    }, [_vm._v(_vm._s(_vm.youbi_shift[index]))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(time.start_time) + " ～ " + _vm._s(time.end_time))]), _vm._v(" "), _c("input", {
       attrs: {
         type: "hidden",
         name: "time[" + index + "_date]"
@@ -2069,13 +2139,19 @@ var render = function render() {
       domProps: {
         value: time.date
       }
-    }), _vm._v(" "), _c("td", [_c("Time", {
+    }), _vm._v(" "), _c("td", {
+      staticClass: "start"
+    }, [_c("Time", {
       attrs: {
-        name: "time[" + index + "_start_time]"
+        name: "time[" + index + "_start_time]",
+        value: _vm.start_value[index]
       }
-    })], 1), _vm._v(" "), _c("td", [_c("Time", {
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "end"
+    }, [_c("Time", {
       attrs: {
-        name: "time[" + index + "_end_time]"
+        name: "time[" + index + "_end_time]",
+        value: _vm.end_value[index]
       }
     })], 1)]);
   })], 2)])]);
@@ -2085,7 +2161,7 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("tr", [_c("th", [_vm._v("曜日")]), _vm._v(" "), _c("th", [_vm._v("希望時間")])]);
+  return _c("tr", [_c("th", [_vm._v("曜日")]), _vm._v(" "), _c("th", [_vm._v("希望開始時間")]), _vm._v(" "), _c("th", [_vm._v("希望終了時間")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;

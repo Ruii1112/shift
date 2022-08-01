@@ -20,6 +20,11 @@
         components: {
             'vue-timepicker': VueTimepicker,
         },
+        //data(){
+        //    return{
+        //        value: ""
+        //    }
+        //},
         props: {
             name: {
                 type: String,
