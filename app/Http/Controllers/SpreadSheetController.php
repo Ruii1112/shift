@@ -15,17 +15,19 @@ class SpreadSheetController extends Controller
 {
     public function store(Shift $shift, User $user, ShiftTime $shifttime, Time $time, Comment $comment)
     {
+        //各種情報の格納
         $spread_sheets = \App\SpreadSheet::instance();
         $spread_sheet_id = '1oUzVYRxG3lq0ftuF8w7h5VypnSt_19E_wVW5cwyAQGo';
-        
         $response = $spread_sheets->spreadsheets->get($spread_sheet_id);
         $sheets = $response->getSheets();
         
+        //シートIDの格納
         foreach ($sheets as $sheet) {
             $properties = $sheet->getProperties();
             $sheet_id = $properties->getSheetId(); 
         }
         
+        //クリア
         $body = new \Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
             'requests' => [
                 'updateCells' => [
@@ -38,6 +40,7 @@ class SpreadSheetController extends Controller
         ]);
         $spread_sheets->spreadsheets->batchUpdate($spread_sheet_id, $body); //データ＆セルの装飾のクリアを実行
         
+        //必要な情報の格納
         $all_user = $user->where('admin_flg', '=', 0)->get();
         $date = $shifttime->where('shift_id', '=', $shift->id)->get();
         $user_time = [[]];
@@ -74,6 +77,7 @@ class SpreadSheetController extends Controller
             $youbi[] = $youbi_list[(new DateTime($date[$i]->date))->format('w')];
         }
         
+        //1行目に代入
         $order = [
                 '日付',
                 '曜日'
@@ -96,6 +100,7 @@ class SpreadSheetController extends Controller
                 $params
             );
         
+        //2行目以降の代入
         for($i = 0 ; $i < count($date) ; $i++) {
         
             $order = [

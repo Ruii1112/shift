@@ -1934,44 +1934,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    nameDecision: function nameDecision(youbi, check) {
-      var name;
-
-      switch (youbi) {
-        case "月":
-          name = 'mon_' + check;
-          break;
-
-        case "火":
-          name = 'tue_' + check;
-          break;
-
-        case "水":
-          name = 'wed_' + check;
-          break;
-
-        case "木":
-          name = 'thu_' + check;
-          break;
-
-        case "金":
-          name = 'fri_' + check;
-          break;
-
-        case "土":
-          name = 'sat_' + check;
-          break;
-
-        case "日":
-          name = 'sun_' + check;
-          break;
-
-        default:
-          name = "";
-      }
-
-      return name;
-    },
     reflect: function reflect() {
       var test = [];
       var setting_rows = document.getElementsByClassName('setting_youbi');

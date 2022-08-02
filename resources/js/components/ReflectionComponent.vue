@@ -81,35 +81,6 @@
           }
       },
       methods: {
-          nameDecision: function(youbi, check){
-              let name;
-              switch(youbi){
-                  case "月":
-                      name = 'mon_' + check;
-                      break;
-                  case "火":
-                      name = 'tue_' + check;
-                      break;
-                  case "水":
-                      name = 'wed_' + check;
-                      break;
-                  case "木":
-                      name = 'thu_' + check;
-                      break;
-                  case "金":
-                      name = 'fri_' + check;
-                      break;
-                  case "土":
-                      name = 'sat_' + check;
-                      break;
-                  case "日":
-                      name = 'sun_' + check;
-                      break;
-                  default:
-                      name = "";
-              }
-              return name;
-          },
           reflect: function(){
             let test = [];
             let setting_rows = document.getElementsByClassName('setting_youbi');
