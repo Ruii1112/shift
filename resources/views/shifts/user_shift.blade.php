@@ -7,7 +7,7 @@
             @csrf
                 <reflection-component :times="{{ json_encode($times)}}" :youbi_shift="{{ json_encode($youbi) }}"></reflection-component>
                 <h3>コメント</h3>
-                    <textarea name="time[comment]" cols="80" rows="10"></textarea>
+                    <textarea name="time[comment]" cols="50" rows="5"></textarea>
                 <br>
                 <input type="hidden" name="time[shift_id]" value="{{$shift}}"/>
                 <input type="submit" value="提出"/>
