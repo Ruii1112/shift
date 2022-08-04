@@ -10,9 +10,11 @@
         </div>
         <div class="shift_past">
             <p>過去シフト希望<p>
+            <ul>
             @foreach($shifts_past as $shift)
-                <p>・<a href="/user/shift/past/{{$shift->id}}">{{$shift->name}}</a></p>
+                <li><a href="/user/shift/past/{{$shift->id}}">{{$shift->name}}</a></li>
             @endforeach
+            </ul>
         </div>
 
 @endsection

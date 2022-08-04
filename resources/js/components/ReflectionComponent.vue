@@ -119,6 +119,7 @@
                    this.end_value.splice(i, 1, test['日'].end); 
                 }
             }
+            alert('反映しました。')
           }
       }
     };
