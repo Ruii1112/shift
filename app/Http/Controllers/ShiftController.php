@@ -248,7 +248,7 @@ class ShiftController extends Controller
     //ユーザ用のトップページ表示
     public function user_index(Shift $shift)
     {
-        return view('shifts/user_index')->with(["shifts_operation"=>$shift->where("starting", "=", 1)->get(), "shifts_past"=>$shift->where("starting", "=", 0)->get()]);
+        return view('shifts/user_index')->with(["shifts_operation"=>$shift->where("starting", "=", 1)->orderby('created_at','desc')->get(), "shifts_past"=>$shift->where("starting", "=", 0)->orderby('created_at','desc')->get()]);
     }
     
     //ユーザ用のシフト提出画面表示
@@ -348,7 +348,7 @@ class ShiftController extends Controller
     //管理者用のシフト出力ページ表示
     public function output(Shift $shift)
     {
-        return view('shifts/output')->with(["shifts"=>$shift->where("starting", "=", 0)->get()]);;
+        return view('shifts/output')->with(["shifts"=>$shift->where("starting", "=", 0)->orderby('created_at','desc')->get()]);;
     }
     
     //管理者用のシフト出力（表形式で表示）

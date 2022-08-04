@@ -1979,6 +1979,8 @@ __webpack_require__.r(__webpack_exports__);
           this.end_value.splice(_i, 1, test['日'].end);
         }
       }
+
+      alert('反映しました。');
     }
   }
 });
