@@ -1,9 +1,8 @@
 <?php
 
 
-Route::get('/distinct', 'ShiftController@distinct');
-
 Route::group(['middleware' => ['auth']], function(){
+    Route::get('/distinct', 'ShiftController@distinct');
     Route::get('/', 'ShiftController@index');
     Route::get('/user/index','ShiftController@user_index');
     Route::get('/user', 'ShiftController@user');

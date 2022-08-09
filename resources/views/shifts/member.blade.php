@@ -12,18 +12,19 @@
                     </tr>
                 </table>
                 <input type="submit" value="検索"/>
-                <button><a href='/user'>クリア</a></button>
+                <a href='/user'><button>クリア</button></a>
             </form>
         </div>
         <div class="user">
-            <table border="1">
+            <h3>メンバー</h3>
+            <table class="table table-hover">
                 <tr>
                     <th>　名前　</th>
                     <th>　名前かな　</th>
                     <th>　生年月日　</th>
                     <th>　性別　</th>
-                    <th></th>
-                    <th></th>
+                    <th>　編集　</th>
+                    <th>　削除　</th>
                 </tr>
                 @foreach ($users as $user)
                     <tr>
