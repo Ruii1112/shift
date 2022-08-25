@@ -1,5 +1,5 @@
 <p align='center'>
-    <img width="276" alt="logo" src="https://user-images.githubusercontent.com/99080622/186717393-9595f43d-b847-4edf-957c-ed4ee14d7975.png">
+    <img width="150" alt="logo1" src="https://user-images.githubusercontent.com/99080622/186718196-41c6286e-d997-4b9c-a1f1-fef489a02aa8.png">
 </p>
     
 # Shift Recruitment Management System
