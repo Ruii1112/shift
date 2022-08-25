@@ -15,6 +15,12 @@ Here, the person in charge of recruiting shifts is called the manager, and the p
 Managers: You can distribute shift requests at the date and time they want to recruit, and can output collected shifts in a table.
 Part-time workers: You can submit your desired date and time for the shift requests sent out.
 
+## Demo
+
+There is a login function that can be used only by people who belong to that company.
+
+<img width="886" alt="demo" src="https://user-images.githubusercontent.com/99080622/186718675-a6952b1c-0496-4b7b-b902-6652a19c3113.png">
+
 ## Technology
 * PHP 8
 * MariaDB
