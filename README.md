@@ -1,6 +1,10 @@
 # Shift Recruitment Manegement System
 
-This is a system for recruiting shifts such as part-time jobs that do not have a fixed time.Specifically, the person in charge of recruiting part-time job shift time becomes the administrator, and the administrator can solicit shifts and output the recruited data to the table.People such as part-timers can submit their desired time for the shifts they are looking for.
+This is a system for recruiting shifts such as part-time jobs that do not have a fixed time.
+
+# Description
+
+Here, the person in charge of recruiting shifts is called the manager, and the person submitting shifts is called the part-timer. This system makes it easy for managers to recruit part-time workers for shifts.
 
 # Technology
 * Laravel
