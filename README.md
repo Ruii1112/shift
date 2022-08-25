@@ -1,4 +1,4 @@
-# Shift Recruitment Manegement System
+# Shift Recruitment Management System
 
 This is a system for recruiting shifts such as part-time jobs that do not have a fixed time.
 
