@@ -1,4 +1,7 @@
-<img width="276" alt="logo" src="https://user-images.githubusercontent.com/99080622/186717393-9595f43d-b847-4edf-957c-ed4ee14d7975.png">
+<p align='center'>
+    <img width="276" alt="logo" src="https://user-images.githubusercontent.com/99080622/186717393-9595f43d-b847-4edf-957c-ed4ee14d7975.png">
+</p>
+    
 # Shift Recruitment Management System
 
 This is a system for recruiting shifts such as part-time jobs that do not have a fixed time.
