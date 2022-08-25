@@ -12,9 +12,16 @@ Managers: You can distribute shift requests at the date and time they want to re
 Part-time workers: You can submit your desired date and time for the shift requests sent out.
 
 ## Technology
-* Laravel
+* PHP 8
 * MariaDB
+* HTML
+* CSS
+* JavaScript
+
+## Framework
+* Laravel 6
 * Vue.js
+* Bootstrap
 
 ## Author
 * Rui Inoue
