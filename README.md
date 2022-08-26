@@ -13,6 +13,7 @@ Here, the person in charge of recruiting shifts is called the manager, and the p
 ## Usage
 
 Managers: You can distribute shift requests at the date and time they want to recruit, and can output collected shifts in a table.
+
 Part-time workers: You can submit your desired date and time for the shift requests sent out.
 
 ## Demo
