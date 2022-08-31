@@ -45,7 +45,6 @@ class LoginController extends Controller
       return 'login_id';
     }
     
-    
     protected function loggedOut(Request $request)
     {
         return redirect(route('login'));
