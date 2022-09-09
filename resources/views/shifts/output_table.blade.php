@@ -3,10 +3,9 @@
 @section('content')
         <div class="output">
             <h2>{{$shift->name}}</h2>
-            
-            <a href="/sheet/{{$shift->id}}">・スプレッドシート</a>
-            
-            <table border="1">
+            <br>
+            <a href="/sheet/{{$shift->id}}">スプレッドシート</a>
+            <table border="1" class="table">
                 <div class="user">
                     <tr>
                         <th>日付</th>
@@ -37,6 +36,7 @@
                 </div>
             </table>
         </div>
+        <br>
         <div class="back"><p><a href="/">戻る</a></p></div>
 
 @endsection

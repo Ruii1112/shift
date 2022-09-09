@@ -25,9 +25,10 @@
                     @endforeach
                     </table>
                 </div>
-                <input type="submit" value="確定"/>
+                <input type="submit" class="btn btn-primary" value="確定"/>
             </form>
         </div>
+        <br>
         <div class="back"><a href="/create">戻る</a></div>
 
 @endsection

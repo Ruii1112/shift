@@ -2040,7 +2040,7 @@ var render = function render() {
     staticClass: "reflectiton"
   }, [_c("div", {
     staticClass: "table"
-  }, [_c("h3", [_vm._v("一括設定")]), _vm._v(" "), _c("table", {
+  }, [_c("h4", [_vm._v("一括設定")]), _vm._v(" "), _c("table", {
     staticClass: "setting",
     attrs: {
       border: "1"
@@ -2075,7 +2075,8 @@ var render = function render() {
         "auto-scroll": ""
       }
     })], 1)]);
-  })], 2), _vm._v(" "), _c("input", {
+  })], 2), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
+    staticClass: "btn btn-secondary",
     attrs: {
       type: "button",
       value: "一括反映"
@@ -2085,7 +2086,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "participate"
-  }, [_c("h3", [_vm._v("希望")]), _vm._v(" "), _c("table", {
+  }, [_c("h4", [_vm._v("希望")]), _vm._v(" "), _c("table", {
     staticClass: "want",
     attrs: {
       border: "1"
