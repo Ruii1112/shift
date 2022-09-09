@@ -36,8 +36,9 @@
                 </div>
             </div>
 
-            <input type="submit" value="確認"/>
+            <input type="submit" class="btn btn-primary" value="確認"/>
         </form>
+        <br>
         <div class="back"><a href="/make">戻る</a></div>
 
 @endsection

@@ -3,13 +3,15 @@
 @section('content')
 
         <div class="shift_operation">
-            <p>現在稼働中</p>
+            <h4>現在稼働中</h4>
+            <ul>
             @foreach($shifts_operation as $shift)
-                <p>・<a href="/user/shift/{{$shift->id}}">{{$shift->name}}</a></p>
+                <li><a href="/user/shift/{{$shift->id}}">{{$shift->name}}</a></li>
             @endforeach
+            </ul>
         </div>
         <div class="shift_past">
-            <p>過去シフト希望<p>
+            <h4>過去シフト希望</h4>
             <ul>
             @foreach($shifts_past as $shift)
                 <li><a href="/user/shift/past/{{$shift->id}}">{{$shift->name}}</a></li>

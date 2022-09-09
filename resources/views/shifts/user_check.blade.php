@@ -6,7 +6,7 @@
                 <p>{{Auth::user()->first_name}}さんの{{$shift->name}}の提出内容確認</p>
             </div>
             <div class='shift'>
-                <table border="1">
+                <table border="1" class="table">
                     <tr>
                         <th>日付</th>
                         <th>曜日</th>
@@ -23,6 +23,7 @@
                     @endforeach
                 </table>
             </div>
+            <br>
             <div class="comment">
                 <h3>コメント</h3>
                 <p>{{$comment}}</p>

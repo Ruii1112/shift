@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
         <div class='name_select'>
             <form action="/user/past/{{$shifts->id}}" method="GET">
                 @csrf

@@ -12,9 +12,10 @@
                     </tr>
                 </table>
                 <input type="submit" value="検索"/>
-                <a href='/user'><button>クリア</button></a>
+                <input type="button" onclick="location.href='/user'" value="クリア"/>
             </form>
         </div>
+        <br>
         <div class="user">
             <h3>メンバー</h3>
             <table class="table table-hover">

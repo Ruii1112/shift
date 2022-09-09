@@ -1,7 +1,7 @@
 <template>
     <div class="reflectiton">
         <div class="table">
-            <h3>一括設定</h3>
+            <h4>一括設定</h4>
             <table class="setting" border="1">
                 <tr>
                     <th>曜日</th>
@@ -30,10 +30,11 @@
                         ></vue-timepicker></td>
                     </tr>
             </table>
-            <input type="button" value='一括反映' @click="reflect"/>
+            <br>
+            <input type="button" class="btn btn-secondary" value='一括反映' @click="reflect"/>
         </div>
         <div class="participate">
-            <h3>希望</h3>
+            <h4>希望</h4>
             <table class="want" border="1">
                 <tr>
                     <th>日時</th>
