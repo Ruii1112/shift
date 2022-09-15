@@ -16,16 +16,17 @@
             </form>
         </div>
         <br>
+        <div class="register"><p><a href="/user/new">新規登録</a></p></div>
         <div class="user">
             <h3>メンバー</h3>
-            <table class="table table-hover">
+            <table class="table table-striped table-sm">
                 <tr>
-                    <th>　名前　</th>
-                    <th>　名前かな　</th>
-                    <th>　生年月日　</th>
-                    <th>　性別　</th>
-                    <th>　編集　</th>
-                    <th>　削除　</th>
+                    <th style="width: 20%;">　名前　</th>
+                    <th style="width: 20%;">　名前かな　</th>
+                    <th style="width: 20%;">　生年月日　</th>
+                    <th style="width: 10%;">　性別　</th>
+                    <th style="width: 10%;">　編集　</th>
+                    <th style="width: 5%;">　削除　</th>
                 </tr>
                 @foreach ($users as $user)
                     <tr>
@@ -33,7 +34,7 @@
                         <td>　{{$user->first_name_kana}} {{$user->last_name_kana}}　</td>
                         <td> {{ $user->birth }}</td>
                         <td> {{$user->sex}}</td>
-                        <td><a href="/user/edit/{{$user->id}}" style="text-decoration:none">　編集　</a></td>
+                        <td><button onclick="location.href='/user/edit/{{$user->id}}'" style="text-decoration:none;">　編集　</button></td>
                         <td>
                             <form action="/user/{{ $user->id }}" id="form_{{ $user->id }}" method="POST" style="display:inline">
                                 @csrf
@@ -45,7 +46,6 @@
                 @endforeach
             </table>
         </div>
-        <div class="register"><p><a href="/user/new">新規登録</a></p></div>
         <div class="back"><a href="/">戻る</a></div>
 
 @endsection

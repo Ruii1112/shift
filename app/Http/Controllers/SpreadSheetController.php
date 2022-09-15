@@ -128,6 +128,6 @@ class SpreadSheetController extends Controller
             );
         
         }
-        return redirect('/output');
+        return redirect('/output/'.$shift->id);
     }
 }
